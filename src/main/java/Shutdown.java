@@ -7,7 +7,7 @@ public class Shutdown extends ListenerAdapter {
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         String[] args = event.getMessage().getContentRaw().split(" ");
         if (args[0].equalsIgnoreCase(ConfigParser.getPrefix() + "shutdown") && event.getAuthor().getId().equals(ConfigParser.getAuthorId())) {
-            event.getChannel().sendMessage("Shutting down bot").queue();
+            event.getChannel().sendMessage("```diff\n-Shutting down bot\n```").queue();
             event.getJDA().shutdown();
         }
     }

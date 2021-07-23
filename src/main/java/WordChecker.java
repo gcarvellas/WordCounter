@@ -8,7 +8,7 @@ public class WordChecker extends ListenerAdapter {
         for (String word: ConfigParser.getWords()) {
             if (event.getMessage().getContentDisplay().toLowerCase().contains(word)){
                 ScoreManager.addUser(event.getAuthor().toString());
-                event.getChannel().sendMessage("You got a point! Your score is: " + ScoreManager.getScore(event.getAuthor().toString())).queue();
+                event.getChannel().sendMessage("```diff\n+ You got a point " + event.getAuthor().getName() + "! Your score is: " + ScoreManager.getScore(event.getAuthor().toString()) + "```").queue();
             }
         }
     }
