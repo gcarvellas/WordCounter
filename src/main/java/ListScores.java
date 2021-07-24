@@ -3,7 +3,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.bson.Document;
 
-import java.util.Map;
+import java.util.*;
 
 public class ListScores extends ListenerAdapter {
     @Override
@@ -22,9 +22,20 @@ public class ListScores extends ListenerAdapter {
 
     private String scoresAsString(){
         String result="";
-        for (Map.Entry<String, Integer> entry: ScoreManager.getScores().entrySet()){
-            result+=entry.getKey() + ": " + entry.getValue() + "\n";
+
+        LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
+
+        ScoreManager.getScores().entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .forEachOrdered(x -> sortedMap.put(x.getKey(), x.getValue()));
+
+        for (Map.Entry<String, Integer> entry: sortedMap.entrySet()){
+            result+= entry.getKey() + ": " + entry.getValue() + "\n";
         }
+
         return result;
     }
+
+
 }
